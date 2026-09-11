@@ -16,7 +16,6 @@ export function NetworkCard() {
         </span>
         <div>
           <h2 className="font-bold">Networks</h2>
-          <p className="text-sm text-muted">Test networks only. No mainnet anywhere.</p>
         </div>
       </header>
       <ul className="mt-4 grid gap-2">

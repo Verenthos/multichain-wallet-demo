@@ -11,7 +11,6 @@ export function ActivityLog({ entries }: { entries: Activity[] }) {
         </span>
         <div>
           <h2 className="font-bold">Recent activity</h2>
-          <p className="text-sm text-muted">What this session has done so far.</p>
         </div>
       </header>
 
