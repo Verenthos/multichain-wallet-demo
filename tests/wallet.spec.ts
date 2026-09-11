@@ -25,7 +25,7 @@ test('shows connecting while the wallet prompt is open', async ({ page }) => {
   await page.getByTestId('connect').click()
   await expect(page.getByTestId('status')).toHaveText('connecting')
   await expect(page.getByTestId('connect')).toBeDisabled()
-  await expect(page.getByTestId('chain')).toBeDisabled()
+  await expect(page.getByTestId('chain-sui')).toBeDisabled()
   await expect(page.getByTestId('status')).toHaveText('connected')
 })
 
@@ -51,7 +51,7 @@ test('switching chain disconnects and connects on the new chain', async ({ page 
   await page.getByTestId('connect').click()
   await expect(page.getByTestId('address')).toHaveText(SOLANA_ADDRESS)
 
-  await page.getByTestId('chain').selectOption('sui')
+  await page.getByTestId('chain-sui').click()
   await expect(page.getByTestId('status')).toHaveText('disconnected')
   await expect(page.getByTestId('address')).toHaveText('none')
 
@@ -59,7 +59,7 @@ test('switching chain disconnects and connects on the new chain', async ({ page 
   await expect(page.getByTestId('status')).toHaveText('connected')
   await expect(page.getByTestId('address')).toHaveText(SUI_ADDRESS)
 
-  await page.getByTestId('chain').selectOption('solana')
+  await page.getByTestId('chain-solana').click()
   await expect(page.getByTestId('status')).toHaveText('disconnected')
   await expect(page.getByTestId('address')).toHaveText('none')
 })

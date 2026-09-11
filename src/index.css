@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", system-ui, sans-serif;
+
+  --color-bg: #0a0d19;
+  --color-panel: #10142a;
+  --color-panel-2: #151a33;
+  --color-line: #232948;
+  --color-text: #e9ebf7;
+  --color-muted: #8d93b5;
+  --color-primary: #7b61ff;
+  --color-sol: #14f195;
+  --color-sui: #4da2ff;
+}
+
+body {
+  background-color: var(--color-bg);
+  background-image:
+    radial-gradient(ellipse 50% 35% at 70% 0%, rgba(123, 97, 255, 0.18), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 15% 100%, rgba(77, 162, 255, 0.1), transparent 70%);
+  background-attachment: fixed;
+  color: var(--color-text);
+}
