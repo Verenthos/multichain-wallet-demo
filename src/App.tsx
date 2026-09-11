@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useWalletSession, type Chain } from './wallet'
-
-const buttonClass =
-  'rounded-md bg-neutral-100 px-4 py-2 text-sm font-medium text-neutral-900 disabled:cursor-not-allowed disabled:opacity-50'
+import { SessionActions } from './SessionActions'
+import { buttonClass } from './buttonClass'
 
 function App() {
   const [chain, setChain] = useState<Chain>('solana')
@@ -61,6 +60,8 @@ function App() {
         </div>
 
         {error && <p className="mt-4 text-sm text-red-400">{error}</p>}
+
+        {session.status === 'connected' && <SessionActions session={session} />}
       </section>
     </main>
   )
