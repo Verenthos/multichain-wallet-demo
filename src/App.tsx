@@ -22,6 +22,15 @@ function App() {
     await session.disconnect()
   }
 
+  async function handleChainChange(next: Chain) {
+    setError(null)
+    // Leave the current chain cleanly before showing the next one. disconnect() is safe in any
+    // status: it ends a live connection and clears an error. The select is disabled while
+    // connecting, so a switch can never race an in-flight wallet prompt.
+    if (session.status !== 'disconnected') await session.disconnect()
+    setChain(next)
+  }
+
   return (
     <main className="min-h-screen bg-neutral-950 p-8 text-neutral-100">
       <h1 className="text-2xl font-semibold">Multi-chain wallet demo</h1>
@@ -31,9 +40,11 @@ function App() {
         <label className="flex items-center gap-3 text-sm">
           <span className="text-neutral-400">Chain</span>
           <select
-            className="rounded-md border border-neutral-700 bg-neutral-900 px-2 py-1"
+            data-testid="chain"
+            className="rounded-md border border-neutral-700 bg-neutral-900 px-2 py-1 disabled:opacity-50"
             value={chain}
-            onChange={(e) => setChain(e.target.value as Chain)}
+            disabled={session.status === 'connecting'}
+            onChange={(e) => handleChainChange(e.target.value as Chain)}
           >
             <option value="solana">Solana devnet</option>
             <option value="sui">Sui testnet</option>
@@ -42,24 +53,35 @@ function App() {
 
         <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
           <dt className="text-neutral-400">Status</dt>
-          <dd>{session.status}</dd>
+          <dd data-testid="status">{session.status}</dd>
           <dt className="text-neutral-400">Address</dt>
-          <dd className="break-all font-mono">{session.address ?? 'none'}</dd>
+          <dd data-testid="address" className="break-all font-mono">
+            {session.address ?? 'none'}
+          </dd>
         </dl>
 
         <div className="mt-6">
           {session.status === 'connected' ? (
-            <button className={buttonClass} onClick={handleDisconnect}>
+            <button data-testid="disconnect" className={buttonClass} onClick={handleDisconnect}>
               Disconnect
             </button>
           ) : (
-            <button className={buttonClass} onClick={handleConnect} disabled={session.status === 'connecting'}>
+            <button
+              data-testid="connect"
+              className={buttonClass}
+              onClick={handleConnect}
+              disabled={session.status === 'connecting'}
+            >
               Connect
             </button>
           )}
         </div>
 
-        {error && <p className="mt-4 text-sm text-red-400">{error}</p>}
+        {error && (
+          <p data-testid="error" className="mt-4 text-sm text-red-400">
+            {error}
+          </p>
+        )}
 
         {session.status === 'connected' && <SessionActions session={session} />}
       </section>

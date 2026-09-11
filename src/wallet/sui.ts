@@ -41,7 +41,9 @@ export function useSuiSession(): WalletSession {
 
     async disconnect() {
       setError(null)
-      await dAppKit.disconnectWallet()
+      // disconnectWallet throws WalletNotConnectedError when nothing is connected, so guard it.
+      // That makes disconnect() safe to call from any status, which the chain switch relies on.
+      if (connection.status === 'connected') await dAppKit.disconnectWallet()
     },
 
     async getBalance() {
