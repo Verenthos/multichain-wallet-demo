@@ -64,9 +64,7 @@ function App() {
           </div>
           <span className="flex items-center gap-2 rounded-xl border border-line bg-panel px-4 py-2 text-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
-            <span>
-              <span className="font-semibold">Demo</span> <span className="text-muted">testnets only</span>
-            </span>
+            <span className="font-semibold">Demo</span>
           </span>
         </header>
 
